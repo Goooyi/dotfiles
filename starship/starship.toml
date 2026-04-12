@@ -15,7 +15,7 @@ add_newline = false
 
 [fill]
 symbol = "─"
-style = "bold cyan"
+style = "dimmed"
 
 # Starship modules
 [character]
@@ -25,8 +25,9 @@ error_symbol = "[[⚡](bold red) ❯](bold red)"
 vimcmd_symbol = "[⚡ ❮](bold green)" # For use with zsh-vi-mode
 
 [git_branch]
-style = "bold purple" # starship default
+style = "bold bright-magenta"
 
 [directory]
 truncation_length = 4
-style = "bold cyan"
+style = "bold blue"
+
