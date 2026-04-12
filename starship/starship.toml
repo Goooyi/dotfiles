@@ -9,6 +9,7 @@
 format = """
 $all\
 $fill\
+$cmd_duration\
 $line_break\
 $character"""
 add_newline = false
@@ -19,7 +20,6 @@ style = "dimmed"
 
 # Starship modules
 [character]
-# Note the use of Catppuccin color 'peach'
 success_symbol = "[[⚡](bold green) ❯](bold green)"
 error_symbol = "[[⚡](bold red) ❯](bold red)"
 vimcmd_symbol = "[⚡ ❮](bold green)" # For use with zsh-vi-mode
