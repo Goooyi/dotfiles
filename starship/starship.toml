@@ -1,7 +1,8 @@
+# inspired by: https://github.com/starship/starship/discussions/1107?sort=top#discussioncomment-13804687
 "$schema" = 'https://starship.rs/config-schema.json'
 
 palette = 'pastel_brite'
-# [pastel, pastel_brite, catppuccin_mocha]
+# [pastel, pastel_brite, catppuccin_latte]
 
 format = """
 [╭](gray)\
@@ -46,7 +47,7 @@ $character
 
 [fill]
 symbol = "─"
-style = "dimmed"
+style = "fg:gray"
 
 [username]
 disabled = false
@@ -91,16 +92,16 @@ truncation_symbol = "…/"
 
 # Shorten some long paths by text replacement
 # similar to mapped_locations in Oh My Posh:
-# [directory.substitutions]
-# "/Documents" = "/󰈙 "
-# "/Downloads" = "/ "
-# "/Music" = "/ "
-# "/Pictures" = "/ "
-# "/Videos" = "/ "
-# "/Audios" = "/ "
-# "/GitHub" = "/ "
-# "/.config" = "/ "
-# "/Develop" = "/󰲋 "
+[directory.substitutions]
+"/Documents" = "/󰈙 "
+"/Downloads" = "/ "
+"/Music" = "/ "
+"/Pictures" = "/ "
+"/Videos" = "/ "
+"/Audios" = "/ "
+"/GitHub" = "/ "
+"/.config" = "/ "
+"/Develop" = "/󰲋 "
 # Keep in mind that the order matters. For example:
 # "/Important Documents" = "/󰈙 "
 # will not be replaced, because "/Documents" was already substituted before.
@@ -117,10 +118,10 @@ format = '[  $time ]($style)'
 disabled = false
 show_milliseconds = true
 show_notifications = true
-min_time = 100
+min_time = 2000
 min_time_to_notify = 45000
 format = "[  in $duration ]($style)"
-style = "fg:lavender"
+style = "fg:gray"
 
 [character]
 disabled = false
@@ -134,15 +135,15 @@ format = '[ $symbol $branch ]($style)'
 
 [git_status]
 disabled = false
-# ahead = " $count "
-# behind = " $count "
-# deleted = "﫧 $count "
-# diverged = " $count "
-# stashed = " $count "
-# modified = " $count "
-# staged = " $count "
-# renamed = " $count "
-# untracked = " $count "
+ahead = " $count "
+behind = " $count "
+deleted = "﫧 $count "
+diverged = " $count "
+stashed = " $count "
+modified = " $count "
+staged = " $count "
+renamed = " $count "
+untracked = " $count "
 style = "bg:bg2 fg:text"
 format = '[($all_status$ahead_behind)]($style)'
 
@@ -263,17 +264,17 @@ bg1 = '211'
 bg2 = '216'
 bg3 = '111'
 bg4 = '116'
-bg5 = '74'
+bg5 = '110'
 text = '16'
 lavender = '147'
 red = '161'
 yellow = '222'
-green = '77'
+green = '34'
 white = '231'
 gray = '242'
 black = '16'
 
-[palettes.catppuccin_mocha]
+[palettes.catppuccin_latte]
 bg0 = '211'
 bg1 = '216'
 bg2 = '223'
