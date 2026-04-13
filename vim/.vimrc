@@ -63,11 +63,6 @@ nnoremap <silent> <localleader>n :call ToggleNetrw()<CR>
 " no need to fold things in markdown all the time
 let g:vim_markdown_folding_disabled = 1
 
-" transparent background
-highlight Normal guibg=NONE ctermbg=NONE
-highlight LineNr guibg=NONE ctermbg=NONE
-highlight SignColumn guibg=NONE ctermbg=NONE
-
 " use system clipboard by default
 set clipboard=unnamed
 
@@ -90,5 +85,3 @@ augroup Osc52Yank
     autocmd!
     autocmd TextYankPost * call Osc52Yank()
 augroup END
-
-set termguicolors
