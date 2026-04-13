@@ -13,6 +13,7 @@ This repo is intentionally opinionated:
 - `~/.zshrc`
 - `~/.tmux.conf`
 - `~/.config/starship.toml`
+- `~/.vimrc`
 
 ## Cross-platform approach
 
@@ -43,6 +44,7 @@ The installer is conservative:
 
 - it bootstraps `~/.oh-my-zsh` if missing
 - it installs or updates `zsh-autosuggestions` and `zsh-syntax-highlighting`
+- it installs `vim-sensible` under `~/.vim/pack/yigao/start/vim-sensible`
 - if a target file is already linked to this repo, it leaves it alone
 - otherwise it backs up the existing file to `*.pre-dotfiles-<timestamp>`
 - then it creates the symlink

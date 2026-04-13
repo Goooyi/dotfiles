@@ -46,9 +46,11 @@ link_file() {
 ensure_repo "https://github.com/ohmyzsh/ohmyzsh.git" "${TARGET_HOME}/.oh-my-zsh"
 ensure_repo "https://github.com/zsh-users/zsh-autosuggestions.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 ensure_repo "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+ensure_repo "https://github.com/tpope/vim-sensible.git" "${TARGET_HOME}/.vim/pack/yigao/start/vim-sensible"
 
 link_file "${REPO_ROOT}/zsh/.zshrc" "${TARGET_HOME}/.zshrc"
 link_file "${REPO_ROOT}/tmux/.tmux.conf" "${TARGET_HOME}/.tmux.conf"
 link_file "${REPO_ROOT}/starship/starship.toml" "${TARGET_HOME}/.config/starship.toml"
+link_file "${REPO_ROOT}/vim/.vimrc" "${TARGET_HOME}/.vimrc"
 
 echo "Installed dotfiles from ${REPO_ROOT}"
