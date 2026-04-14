@@ -9,6 +9,7 @@ format = """
 [](bg0)\
 $os\
 $username\
+$hostname\
 [](fg:bg0 bg:bg1)\
 $directory\
 [](fg:bg1 bg:bg2)\
@@ -56,6 +57,14 @@ style_user = "bg:bg0 fg:text"
 style_root = "bg:bg0 fg:text"
 # symbol = "󰀄"
 format = '[$user ]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+ssh_symbol = "🌐 "
+trim_at = "."
+style = "bg:bg0 fg:text"
+format = '[in $ssh_symbol$hostname ]($style)'
 
 [os]
 disabled = false
