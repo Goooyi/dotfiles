@@ -43,11 +43,20 @@ Put things like these in `~/.zshrc.local`, not in the repo:
 The installer is conservative:
 
 - it bootstraps `~/.oh-my-zsh` if missing
+- it uses the Tsinghua TUNA `ohmyzsh.git` mirror by default, with GitHub as fallback
 - it installs or updates `zsh-autosuggestions` and `zsh-syntax-highlighting`
 - it installs `vim-sensible` under `~/.vim/pack/yigao/start/vim-sensible`
 - if a target file is already linked to this repo, it leaves it alone
 - otherwise it backs up the existing file to `*.pre-dotfiles-<timestamp>`
 - then it creates the symlink
+
+You can override the repo sources with env vars before running `install.sh`:
+
+- `OH_MY_ZSH_REPO_URL`
+- `OH_MY_ZSH_REPO_FALLBACK_URL`
+- `ZSH_AUTOSUGGESTIONS_REPO_URL`
+- `ZSH_SYNTAX_HIGHLIGHTING_REPO_URL`
+- `VIM_SENSIBLE_REPO_URL`
 
 ## Use with VS Code Dev Containers
 
