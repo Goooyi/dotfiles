@@ -4,45 +4,20 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_HOME="${HOME}"
 STAMP="$(date +%Y%m%d%H%M%S)"
-OH_MY_ZSH_REPO_URL="${OH_MY_ZSH_REPO_URL:-https://mirrors.tuna.tsinghua.edu.cn/git/ohmyzsh.git}"
-OH_MY_ZSH_REPO_FALLBACK_URL="${OH_MY_ZSH_REPO_FALLBACK_URL:-https://github.com/ohmyzsh/ohmyzsh.git}"
-ZSH_AUTOSUGGESTIONS_REPO_URL="${ZSH_AUTOSUGGESTIONS_REPO_URL:-https://github.com/zsh-users/zsh-autosuggestions.git}"
-ZSH_SYNTAX_HIGHLIGHTING_REPO_URL="${ZSH_SYNTAX_HIGHLIGHTING_REPO_URL:-https://github.com/zsh-users/zsh-syntax-highlighting.git}"
-VIM_SENSIBLE_REPO_URL="${VIM_SENSIBLE_REPO_URL:-https://github.com/tpope/vim-sensible.git}"
 
 mkdir -p "${TARGET_HOME}/.config"
 
 ensure_repo() {
-  local dir="$1"
-  shift
-  local urls=("$@")
-  local url=""
+  local url="$1"
+  local dir="$2"
 
   mkdir -p "$(dirname "${dir}")"
 
   if [[ -d "${dir}/.git" ]]; then
-    for url in "${urls[@]}"; do
-      [[ -n "${url}" ]] || continue
-      if git -C "${dir}" remote set-url origin "${url}" \
-        && git -C "${dir}" fetch --depth=1 --single-branch --filter=blob:none origin HEAD \
-        && git -C "${dir}" reset --hard FETCH_HEAD; then
-        return 0
-      fi
-    done
-    echo "failed to update ${dir} from configured remotes" >&2
-    return 1
+    git -C "${dir}" pull --ff-only
+  else
+    git clone --depth=1 "${url}" "${dir}"
   fi
-
-  for url in "${urls[@]}"; do
-    [[ -n "${url}" ]] || continue
-    rm -rf "${dir}"
-    if git clone --depth=1 --single-branch --filter=blob:none "${url}" "${dir}"; then
-      return 0
-    fi
-  done
-
-  echo "failed to clone ${dir} from configured remotes" >&2
-  return 1
 }
 
 link_file() {
@@ -68,10 +43,10 @@ link_file() {
   echo "Linked ${dst} -> ${src}"
 }
 
-ensure_repo "${TARGET_HOME}/.oh-my-zsh" "${OH_MY_ZSH_REPO_URL}" "${OH_MY_ZSH_REPO_FALLBACK_URL}"
-ensure_repo "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" "${ZSH_AUTOSUGGESTIONS_REPO_URL}"
-ensure_repo "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" "${ZSH_SYNTAX_HIGHLIGHTING_REPO_URL}"
-ensure_repo "${TARGET_HOME}/.vim/pack/yigao/start/vim-sensible" "${VIM_SENSIBLE_REPO_URL}"
+ensure_repo "https://github.com/ohmyzsh/ohmyzsh.git" "${TARGET_HOME}/.oh-my-zsh"
+ensure_repo "https://github.com/zsh-users/zsh-autosuggestions.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+ensure_repo "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+ensure_repo "https://github.com/tpope/vim-sensible.git" "${TARGET_HOME}/.vim/pack/yigao/start/vim-sensible"
 
 link_file "${REPO_ROOT}/zsh/.zshrc" "${TARGET_HOME}/.zshrc"
 link_file "${REPO_ROOT}/tmux/.tmux.conf" "${TARGET_HOME}/.tmux.conf"
