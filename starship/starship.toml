@@ -1,72 +1,299 @@
+# inspired by: https://github.com/starship/starship/discussions/1107?sort=top#discussioncomment-13804687
 "$schema" = 'https://starship.rs/config-schema.json'
 
+palette = 'pastel_brite'
+# [pastel, pastel_brite, catppuccin_latte]
+
 format = """
-[░▒▓](#a3aed2)\
-[  ](bg:#a3aed2 fg:#090c0c)\
-[](bg:#769ff0 fg:#a3aed2)\
+[╭](gray)\
+[](bg0)\
+$os\
+$username\
+$hostname\
+[](fg:bg0 bg:bg1)\
 $directory\
-[](fg:#769ff0 bg:#394260)\
+[](fg:bg1 bg:bg2)\
 $git_branch\
 $git_status\
-[](fg:#394260 bg:#212736)\
-$nodejs\
-$rust\
+[](fg:bg2 bg:bg3)\
+$c\
+$cpp\
+$elixir\
+$elm\
 $golang\
+$gradle\
+$haskell\
+$java\
+$julia\
+$kotlin\
+$nodejs\
+$nim\
 $php\
-[](fg:#212736 bg:#1d2230)\
+$python\
+$rust\
+$scala\
+[](fg:bg3 bg:bg4)\
+$conda\
+$docker_context\
+$pixi\
+[](fg:bg4 bg:bg5)\
 $time\
-[ ](fg:#1d2230)\
+[](fg:bg5)\
 $fill\
 $cmd_duration\
-\n$character"""
+$line_break\
+[╰](gray)\
+$character
+"""
 
 [fill]
 symbol = "─"
 style = "fg:gray"
 
+[username]
+disabled = false
+show_always = true
+style_user = "bg:bg0 fg:text"
+style_root = "bg:bg0 fg:text"
+# symbol = "󰀄"
+format = '[$user]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+trim_at = "."
+style = "bg:bg0 fg:text"
+format = '[@$hostname ]($style)'
+
+[os]
+disabled = false
+style = "bg:bg0 fg:text"
+
+[os.symbols]
+Windows = "  "
+Ubuntu = " 󰕈 "
+SUSE = "  "
+Raspbian = " 󰐿 "
+Mint = " 󰣭 "
+Macos = " 󰀵 "
+Manjaro = "  "
+Linux = " 󰌽 "
+Gentoo = " 󰣨 "
+Fedora = " 󰣛 "
+Alpine = "  "
+Amazon = "  "
+Android = "  "
+Arch = " 󰣇 "
+Artix = " 󰣇 "
+CentOS = "  "
+Debian = " 󰣚 "
+Redhat = " 󱄛 "
+RedHatEnterprise = " 󱄛 "
+
 [directory]
-style = "fg:#e3e5e5 bg:#769ff0"
-format = "[ $path ]($style)"
+disabled = false
+style = "bg:bg1 fg:text"
+# home_symbol = ""
+format = "[  $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
+# Shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
 [directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
-
-[git_branch]
-symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
-
-[git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
-
-[rust]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
-
-[golang]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
-
-[php]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+"/Documents" = "/󰈙 "
+"/Downloads" = "/ "
+"/Music" = "/ "
+"/Pictures" = "/ "
+"/Videos" = "/ "
+"/Audios" = "/ "
+"/GitHub" = "/ "
+"/.config" = "/ "
+"/Develop" = "/󰲋 "
+# Keep in mind that the order matters. For example:
+# "/Important Documents" = "/󰈙 "
+# will not be replaced, because "/Documents" was already substituted before.
+# So either put "/Important Documents" before "/Documents" or use the substituted version:
+# "/Important 󰈙 " = "/󰈙 "
 
 [time]
 disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#1d2230"
-format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+time_format = "%R"
+style = "bg:bg5 fg:text"
+format = '[  $time ]($style)'
+
+[cmd_duration]
+disabled = false
+show_milliseconds = true
+show_notifications = true
+min_time = 2000
+min_time_to_notify = 45000
+format = "[  in $duration ]($style)"
+style = "fg:gray"
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[❯](bold fg:red)'
+
+[git_branch]
+symbol = ""
+style = "bg:bg2 fg:text"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+disabled = false
+ahead = " $count "
+behind = " $count "
+deleted = "﫧 $count "
+diverged = " $count "
+stashed = " $count "
+modified = " $count "
+staged = " $count "
+renamed = " $count "
+untracked = " $count "
+style = "bg:bg2 fg:text"
+format = '[($all_status$ahead_behind)]($style)'
+
+[conda]
+symbol = ""
+style = "bg:bg4 fg:text"
+format = '[ $symbol ($environment) ]($style)'
+ignore_base = false
+
+[docker_context]
+symbol = ""
+style = "bg:bg4 fg:text"
+format = '[ $symbol ($context) ]($style)'
+
+[pixi]
+style = "bg:bg4 fg:text"
+format = '[ $symbol ($version) ($environment) ]($style)'
+
+[c]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[cpp]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[elixir]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[golang]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[gradle]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = "󰆥"
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[php]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = ""
+style = "bg:bg3 fg:text"
+format = '[ $symbol ($version) ]($style)'
+
+[palettes.pastel]
+bg0 = '90'
+bg1 = '168'
+bg2 = '216'
+bg3 = '110'
+bg4 = '30'
+bg5 = '24'
+text = '231'
+lavender = '147'
+red = '161'
+yellow = '222'
+green = '77'
+white = '231'
+gray = '242'
+black = '16'
+
+[palettes.pastel_brite]
+bg0 = '183'
+bg1 = '211'
+bg2 = '216'
+bg3 = '111'
+bg4 = '116'
+bg5 = '110'
+text = '16'
+lavender = '147'
+red = '161'
+yellow = '222'
+green = '34'
+white = '231'
+gray = '242'
+black = '16'
+
+[palettes.catppuccin_latte]
+bg0 = '211'
+bg1 = '216'
+bg2 = '223'
+bg3 = '151'
+bg4 = '117'
+bg5 = '147'
+text = '16'
+lavender = '147'
+red = '161'
+yellow = '222'
+green = '77'
+white = '231'
+gray = '242'
+black = '16'
