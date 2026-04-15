@@ -60,7 +60,7 @@ format = '[$user ]($style)'
 
 [hostname]
 disabled = false
-ssh_only = true
+ssh_only = false
 ssh_symbol = "🌐 "
 trim_at = "."
 style = "bg:bg0 fg:text"
