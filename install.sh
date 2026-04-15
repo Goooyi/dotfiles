@@ -4,6 +4,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_HOME="${HOME}"
 STAMP="$(date +%Y%m%d%H%M%S)"
+DOTFILES_SKIP_ZSH="${DOTFILES_SKIP_ZSH:-0}"
 
 mkdir -p "${TARGET_HOME}/.config"
 
@@ -43,12 +44,16 @@ link_file() {
   echo "Linked ${dst} -> ${src}"
 }
 
-ensure_repo "https://github.com/ohmyzsh/ohmyzsh.git" "${TARGET_HOME}/.oh-my-zsh"
-ensure_repo "https://github.com/zsh-users/zsh-autosuggestions.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-ensure_repo "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+if [[ "${DOTFILES_SKIP_ZSH}" != "1" ]]; then
+  ensure_repo "https://github.com/ohmyzsh/ohmyzsh.git" "${TARGET_HOME}/.oh-my-zsh"
+  ensure_repo "https://github.com/zsh-users/zsh-autosuggestions.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  ensure_repo "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+fi
 ensure_repo "https://github.com/tpope/vim-sensible.git" "${TARGET_HOME}/.vim/pack/yigao/start/vim-sensible"
 
-link_file "${REPO_ROOT}/zsh/.zshrc" "${TARGET_HOME}/.zshrc"
+if [[ "${DOTFILES_SKIP_ZSH}" != "1" ]]; then
+  link_file "${REPO_ROOT}/zsh/.zshrc" "${TARGET_HOME}/.zshrc"
+fi
 link_file "${REPO_ROOT}/tmux/.tmux.conf" "${TARGET_HOME}/.tmux.conf"
 link_file "${REPO_ROOT}/starship/starship.toml" "${TARGET_HOME}/.config/starship.toml"
 link_file "${REPO_ROOT}/vim/.vimrc" "${TARGET_HOME}/.vimrc"

@@ -49,6 +49,12 @@ The installer is conservative:
 - otherwise it backs up the existing file to `*.pre-dotfiles-<timestamp>`
 - then it creates the symlink
 
+For Bash-first dev containers, you can skip all zsh-related setup:
+
+```bash
+DOTFILES_SKIP_ZSH=1 ./install.sh
+```
+
 ## Use with VS Code Dev Containers
 
 Push this repo to GitHub, then set these VS Code user settings on your MacBook:
