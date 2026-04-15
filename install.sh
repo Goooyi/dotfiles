@@ -52,6 +52,11 @@ ensure_repo() {
   fi
 }
 
+ensure_vim_sensible() {
+  ensure_repo "https://github.com/tpope/vim-sensible.git" "${TARGET_HOME}/.vim/pack/yigao/start/vim-sensible"
+  ensure_repo "https://github.com/tpope/vim-sensible.git" "${TARGET_HOME}/.local/share/nvim/site/pack/yigao/start/vim-sensible"
+}
+
 link_file() {
   local src="$1"
   local dst="$2"
@@ -80,7 +85,7 @@ if [[ "${DOTFILES_SKIP_ZSH}" != "1" ]]; then
   ensure_repo "https://github.com/zsh-users/zsh-autosuggestions.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
   ensure_repo "https://github.com/zsh-users/zsh-syntax-highlighting.git" "${TARGET_HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 fi
-ensure_repo "https://github.com/tpope/vim-sensible.git" "${TARGET_HOME}/.vim/pack/yigao/start/vim-sensible"
+ensure_vim_sensible
 
 if ! command -v starship >/dev/null 2>&1; then
   install_starship "${TARGET_HOME}/.local/bin"
@@ -92,5 +97,6 @@ fi
 link_file "${REPO_ROOT}/tmux/.tmux.conf" "${TARGET_HOME}/.tmux.conf"
 link_file "${REPO_ROOT}/starship/starship.toml" "${TARGET_HOME}/.config/starship.toml"
 link_file "${REPO_ROOT}/vim/.vimrc" "${TARGET_HOME}/.vimrc"
+link_file "${REPO_ROOT}/vim/init.vim" "${TARGET_HOME}/.config/nvim/init.vim"
 
 echo "Installed dotfiles from ${REPO_ROOT}"
