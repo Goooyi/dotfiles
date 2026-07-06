@@ -1,4 +1,6 @@
 set nocompatible
+
+set regexpengine=0
 syntax enable
 filetype plugin indent on
 
@@ -62,22 +64,21 @@ nnoremap <silent> <localleader>n :call ToggleNetrw()<CR>
 " no need to fold things in markdown all the time
 let g:vim_markdown_folding_disabled = 1
 
-" Let OSC52 handle clipboard sync over SSH.
-set clipboard=
+" use system clipboard by default
+set clipboard=unnamed
 
 " function to send the yanked text via OSC 52
 function! Osc52Yank()
-    let l:regname = v:event.regname ==# '' ? '"' : v:event.regname
-    let l:text = getreg(l:regname)
-    let l:encoded = system('base64 | tr -d "\n"', l:text)
-    let l:buffer = "\x1b]52;c;" . l:encoded . "\x07"
+    let buffer=system('base64', @0)
+    let buffer=substitute(buffer, "\n", "", "")
+    let buffer='\e]52;c;'.buffer.'\x07'
 
     " wrap in tmux escape sequence if inside tmux
     if exists('$TMUX')
-        let l:buffer = "\x1bPtmux;\x1b" . l:buffer . "\x1b\\"
+        let buffer='\ePtmux;\e'.buffer.'\e\\'
     endif
 
-    call writefile([l:buffer], '/dev/tty', 'b')
+    silent exe "run! echo -ne \"".buffer."\" > /dev/tty"
 endfunction
 
 " auto-trigger the function after every yank
