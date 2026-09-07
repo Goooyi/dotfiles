@@ -1,0 +1,68 @@
+# See the full configuration reference: https://rioterm.com/docs/config
+
+
+# theme = "lucario"
+# theme = "ayu_light"
+# theme = "ayu_mirage"
+# theme = "atom_one_light"
+# theme = "primary"
+# theme = "dracula"
+# theme = "dracula+"
+theme = "alucard"
+# theme = "rose-pine"
+# theme = "rose-pine-moon"
+# theme = "rose-pine-dawn"
+# theme = "Atom"
+# theme = "ForestBlue"
+# theme = "Kolorit"
+# theme = "MaterialDarker"
+# theme = "MaterialOcean"
+# theme = "overnight-slumber"
+# theme = "Pnevma"
+# theme = "Square"
+
+[editor]
+program = "vim"
+args = []
+
+
+[effects]
+trail-cursor = true
+
+[fonts]
+size = 15
+# family = "JetBrains Mono"
+# family = "BlexMono Nerd Font"
+# family = "IoskeleyMono Nerd Font"
+# family = "WumpusMono Nerd Font Mono"
+family = "Google Sans Code"
+regular = { weight = 450 }
+italic = { weight = 450 }
+bold = { weight = 700 }
+bold-italic = { weight = 700 }
+
+symbol-map = [
+    { start = "E000", end = "F900", font-family = "Symbols Nerd Font Mono" },
+    { start = "F0000", end = "F1AF1", font-family = "Symbols Nerd Font Mono" },
+]
+
+[window]
+opacity = 0.5
+decorations = "enabled"
+blur = true
+
+# decorations = "transparent"
+# blur = "macos-glass-regular"
+# blur = "macos-glass-clear"
+
+
+[[bindings.keys]]
+key = "Backspace"
+with = "super"
+esc = "\u0015"
+
+[[bindings.keys]]
+key = "Backspace"
+with = "option"
+esc = "\u0017"
+
